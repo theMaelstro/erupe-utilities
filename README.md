@@ -2,6 +2,7 @@
 Collection of scripts and tools wrote by me for Erupe.
 
 Delete User From database and clean Database (database_delete_user.psql)
+Currently supports deletion of one user at time.
 
 METHOD 1
 1. Open pgAdmin4 
