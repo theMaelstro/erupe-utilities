@@ -23,7 +23,12 @@ BEGIN
 	DELETE FROM public.sign_sessions WHERE user_id = usertodelete;	
 	
 	-- Guild Keys
+	
+	
+	IF EXISTS(SELECT * FROM information_schema.tables WHERE table_schema = current_schema() AND table_name = 'festa_registrations') THEN
 	DELETE FROM public.festa_registrations WHERE guild_id IN (SELECT id FROM public.guilds WHERE leader_id = usertodelete);
+	END IF;
+	
 	DELETE FROM public.guild_adventures WHERE guild_id IN (SELECT id FROM public.guilds WHERE leader_id = usertodelete);
 	DELETE FROM public.guild_hunts WHERE guild_id IN (SELECT id FROM public.guilds WHERE leader_id = usertodelete);
 	DELETE FROM public.guild_meals WHERE guild_id IN (SELECT id FROM public.guilds WHERE leader_id = usertodelete);
@@ -33,7 +38,11 @@ BEGIN
 	DELETE FROM public.cafe_accepted WHERE character_id IN (SELECT id FROM public.characters WHERE user_id = usertodelete);
 	DELETE FROM public.distribution WHERE character_id IN (SELECT id FROM public.characters WHERE user_id = usertodelete);
 	DELETE FROM public.distributions_accepted WHERE character_id IN (SELECT id FROM public.characters WHERE user_id = usertodelete);
+	
+	IF EXISTS(SELECT * FROM information_schema.tables WHERE table_schema = current_schema() AND table_name = 'festa_prizes_accepted') THEN
 	DELETE FROM public.festa_prizes_accepted WHERE character_id IN (SELECT id FROM public.characters WHERE user_id = usertodelete);
+	END IF;
+	
 	DELETE FROM public.guild_applications WHERE character_id IN (SELECT id FROM public.characters WHERE user_id = usertodelete) OR character_id IN (SELECT id FROM public.guilds WHERE leader_id = usertodelete);
 	DELETE FROM public.guild_characters WHERE character_id IN (SELECT id FROM public.characters WHERE user_id = usertodelete) OR character_id IN (SELECT id FROM public.guilds WHERE leader_id = usertodelete);
 	DELETE FROM public.login_boost_state WHERE char_id IN (SELECT id FROM public.characters WHERE user_id = usertodelete);
